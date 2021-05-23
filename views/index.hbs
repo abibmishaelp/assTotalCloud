@@ -1,13 +1,28 @@
 <h1>{{title}}</h1>
 <p>Welcome to {{subTitle}}</p>
 <link rel='stylesheet' href='/stylesheets/style.css' />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<body>  
+<body>
+    <div class="dropdown">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            Sort By
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="/">None</a>
+            <a class="dropdown-item" href="/first">First Name</a>
+            <a class="dropdown-item" href="/last">Last Name</a>
+        </div>
+    </div>
     {{#if users}}
     {{#each users}}
     <div class="gallery">
-        <a target="_self" href="/getDetails/{{this.id}}" action = 'get' >
-            <img src={{this.avatar}} alt={{this.avatar}} width="60" height="40" value = {{this.id}}>
+        <a target="_self" href="/getDetails/{{this.id}}" action='get'>
+            <img src={{this.avatar}} alt={{this.avatar}} width="60" height="40" value={{this.id}}>
         </a>
         {{!-- <p> {{this.first_name}} {{this.last_name}} </p> --}}
         <label value={{this.id}} name="userId">{{this.first_name}} {{this.last_name}}</label>
