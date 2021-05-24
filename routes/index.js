@@ -9,8 +9,6 @@ let totalUser;
 router.get('/', async (req, res) => {
   let userData;
   try {
-    // console.log(req.params.sort);
-    // let funcName = req.params.sort;
     userData = await axios({
       method: 'get',
       url: 'https://reqres.in/api/users?delay=3',
@@ -18,8 +16,6 @@ router.get('/', async (req, res) => {
     })
       .then((response) => {
         console.log("Data", response.data);
-        // let result = sorting_Function(response.data.data, funcName);
-        // console.log(result);
         totalUser = response.data.total;
         return response.data;
       })
@@ -36,7 +32,7 @@ router.get('/', async (req, res) => {
     });
   }
   finally {
-    console.log(userData.data);
+    console.log("INHbs", userData.data);
     res.render('index', {
       title: 'Assigment for TotalCloud Inc',
       subTitle: "Assignment",
@@ -50,7 +46,7 @@ router.get('/getDetails/:id', async (req, res, next) => {
   try {
     console.log(req.params.id);
     let userId = req.params.id;
-    if (totalUser <= userId || totalUser === userId ) {
+    if (totalUser <= userId || totalUser === userId) {
       return res.render('error', {
         message: "User Not Found",
         status: "NOT FOUND",
@@ -87,63 +83,103 @@ router.get('/getDetails/:id', async (req, res, next) => {
   }
 });
 
-// async function sorting_Function(userData, type) {
-//   switch (type) {
-//     case "none":
-//       return userData;
-//       break;
+router.get('/firstname', async (req, res) => {
+  let userData;
+  try {
+    userData = await axios({
+      method: 'get',
+      url: 'https://reqres.in/api/users?delay=3',
+      responseType: 'json'
+    })
+      .then((response) => {
+        console.log("Data", response.data);
+        totalUser = response.data.total;
+        return response.data;
+      })
+      .catch((error) => {
+        console.log("error@20", error);
+        return error;
+      });
+  } catch (e) {
+    console.log("TryCatch Error@24", e);
+    return res.render('error', {
+      message: error.message,
+      status: error.status,
+      stack: eror.stack
+    });
+  }
+  finally {
+    console.log("SortINHbs", userData.data);
+    function compare(a, b) {
+      // Use toUpperCase() to ignore character casing
+      const firstNameA = a.first_name.toUpperCase();
+      const firstNameB = b.first_name.toUpperCase();
+      let comparison = 0;
+      if (firstNameA > firstNameB) {
+        comparison = 1;
+      } else if (firstNameA < firstNameB) {
+        comparison = -1;
+      }
+      return comparison;
+    }
+    userData.data.sort(compare);
+    console.log("FirstSOrt", userData.data);
+    res.render('index', {
+      title: 'Assigment for TotalCloud Inc',
+      subTitle: "Assignment",
+      users: userData.data
+    });
+  }
+});
 
-//     case "last":
-//       // function compare(a, b) {
-//       //   if (a.last_name < b.last_name) {
-//       //     return -1;
-//       //   }
-//       //   if (a.last_name > b.last_name) {
-//       //     return 1;
-//       //   }
-//       //   return 0;
-//       // }
-//       // return userData.sort(compare);
-//       userData.sort((a, b) => {
-//         let fa = a.last_name.toLowerCase(),
-//           fb = b.last_name.toLowerCase();
 
-//         if (fa < fb) {
-//           return -1;
-//         }
-//         if (fa > fb) {
-//           return 1;
-//         }
-//         return 0;
-//       });
-//       break;
-
-//     case "first":
-//       // function compare(a, b) {
-//       //   if (a.first_name < b.first_name) {
-//       //     return 1;
-//       //   }
-//       //   if (a.first_name > b.first_name) {
-//       //     return -1;
-//       //   }
-//       //   return 0;
-//       // }
-//       // return userData.sort(compare);
-//       userData.sort((a, b) => {
-//         let fa = a.first_name.toLowerCase(),
-//           fb = b.first_name.toLowerCase();
-
-//         if (fa < fb) {
-//           return -1;
-//         }
-//         if (fa > fb) {
-//           return 1;
-//         }
-//         return 0;
-//       });
-//       break;
-//   }
-
-// }
+router.get('/lastname', async (req, res) => {
+  let userData;
+  try {
+    userData = await axios({
+      method: 'get',
+      url: 'https://reqres.in/api/users?delay=3',
+      responseType: 'json'
+    })
+      .then((response) => {
+        console.log("Data", response.data);
+        totalUser = response.data.total;
+        return response.data;
+      })
+      .catch((error) => {
+        console.log("error@20", error);
+        return error;
+      });
+  } catch (e) {
+    console.log("TryCatch Error@24", e);
+    return res.render('error', {
+      message: error.message,
+      status: error.status,
+      stack: eror.stack
+    });
+  }
+  finally {
+    console.log("SortINHbs", userData.data);
+    function compare(a, b) {
+      // Use toUpperCase() to ignore character casing
+      const lastNameA = a.last_name.toUpperCase();
+      const lastNameB = b.last_name.toUpperCase();
+      let comparison = 0;
+      if (lastNameA > lastNameB) {
+        comparison = 1;
+      } else if (lastNameA < lastNameB) {
+        comparison = -1;
+      }
+      return comparison;
+    }
+    userData.data.sort(compare);
+    console.log("LastSort", userData.data);
+    res.render('index', {
+      title: 'Assigment for TotalCloud Inc',
+      subTitle: "Assignment",
+      users: userData.data
+    });
+  }
+});
 
 module.exports = router;
