@@ -1,4 +1,4 @@
-# Task - CRUD Operaions for Students database using a link provided
+# Task - Fetch details using a id and sort details from a given link.
 
   ****** FOR WINDOWS ******
 
